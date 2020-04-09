@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{94F868F0-B865-4FB8-A03A-0A7F424E6F42}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Ally_Local</RootNamespace>
+    <AssemblyName>AllyLocal</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FastColoredTextBox">
+      <HintPath>..\packages\FCTB.2.16.24\lib\FastColoredTextBox.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FormSetup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSetup.Designer.cs">
+      <DependentUpon>FormSetup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="helpers\DesCipher.cs" />
+    <Compile Include="helpers\ConfigSettings.cs" />
+    <Compile Include="helpers\FileHelper.cs" />
+    <Compile Include="my_helpers\MyConfig.cs" />
+    <Compile Include="helpers\StringCipher.cs" />
+    <Compile Include="helpers\TccHelper.cs" />
+    <Compile Include="my_helpers\MyFileHelper.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormSetup.resx">
+      <DependentUpon>FormSetup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="libraries\tcc\lib\libtcc1-32.a" />
+    <None Include="libraries\tcc\lib\libtcc1-64.a" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="exercises\compulsory\files.lst" />
+    <Content Include="exercises\additional\files.lst" />
+    <Content Include="libraries\tcc\doc\tcc-doc.html" />
+    <Content Include="libraries\tcc\doc\tcc-win32.txt" />
+    <Content Include="libraries\tcc\examples\dll.c" />
+    <Content Include="libraries\tcc\examples\fib.c" />
+    <Content Include="libraries\tcc\examples\hello_dll.c" />
+    <Content Include="libraries\tcc\examples\hello_win.c" />
+    <Content Include="libraries\tcc\examples\libtcc_test.c" />
+    <Content Include="libraries\tcc\i386-win32-tcc.exe" />
+    <Content Include="libraries\tcc\include\assert.h" />
+    <Content Include="libraries\tcc\include\conio.h" />
+    <Content Include="libraries\tcc\include\ctype.h" />
+    <Content Include="libraries\tcc\include\dir.h" />
+    <Content Include="libraries\tcc\include\direct.h" />
+    <Content Include="libraries\tcc\include\dirent.h" />
+    <Content Include="libraries\tcc\include\dos.h" />
+    <Content Include="libraries\tcc\include\errno.h" />
+    <Content Include="libraries\tcc\include\excpt.h" />
+    <Content Include="libraries\tcc\include\fcntl.h" />
+    <Content Include="libraries\tcc\include\fenv.h" />
+    <Content Include="libraries\tcc\include\float.h" />
+    <Content Include="libraries\tcc\include\inttypes.h" />
+    <Content Include="libraries\tcc\include\io.h" />
+    <Content Include="libraries\tcc\include\limits.h" />
+    <Content Include="libraries\tcc\include\locale.h" />
+    <Content Include="libraries\tcc\include\malloc.h" />
+    <Content Include="libraries\tcc\include\math.h" />
+    <Content Include="libraries\tcc\include\mem.h" />
+    <Content Include="libraries\tcc\include\memory.h" />
+    <Content Include="libraries\tcc\include\process.h" />
+    <Content Include="libraries\tcc\include\sec_api\conio_s.h" />
+    <Content Include="libraries\tcc\include\sec_api\crtdbg_s.h" />
+    <Content Include="libraries\tcc\include\sec_api\io_s.h" />
+    <Content Include="libraries\tcc\include\sec_api\mbstring_s.h" />
+    <Content Include="libraries\tcc\include\sec_api\search_s.h" />
+    <Content Include="libraries\tcc\include\sec_api\stdio_s.h" />
+    <Content Include="libraries\tcc\include\sec_api\stdlib_s.h" />
+    <Content Include="libraries\tcc\include\sec_api\stralign_s.h" />
+    <Content Include="libraries\tcc\include\sec_api\string_s.h" />
+    <Content Include="libraries\tcc\include\sec_api\sys\timeb_s.h" />
+    <Content Include="libraries\tcc\include\sec_api\tchar_s.h" />
+    <Content Include="libraries\tcc\include\sec_api\time_s.h" />
+    <Content Include="libraries\tcc\include\sec_api\wchar_s.h" />
+    <Content Include="libraries\tcc\include\setjmp.h" />
+    <Content Include="libraries\tcc\include\share.h" />
+    <Content Include="libraries\tcc\include\signal.h" />
+    <Content Include="libraries\tcc\include\stdarg.h" />
+    <Content Include="libraries\tcc\include\stdbool.h" />
+    <Content Include="libraries\tcc\include\stddef.h" />
+    <Content Include="libraries\tcc\include\stdint.h" />
+    <Content Include="libraries\tcc\include\stdio.h" />
+    <Content Include="libraries\tcc\include\stdlib.h" />
+    <Content Include="libraries\tcc\include\string.h" />
+    <Content Include="libraries\tcc\include\sys\fcntl.h" />
+    <Content Include="libraries\tcc\include\sys\file.h" />
+    <Content Include="libraries\tcc\include\sys\locking.h" />
+    <Content Include="libraries\tcc\include\sys\stat.h" />
+    <Content Include="libraries\tcc\include\sys\time.h" />
+    <Content Include="libraries\tcc\include\sys\timeb.h" />
+    <Content Include="libraries\tcc\include\sys\types.h" />
+    <Content Include="libraries\tcc\include\sys\unistd.h" />
+    <Content Include="libraries\tcc\include\sys\utime.h" />
+    <Content Include="libraries\tcc\include\tcclib.h" />
+    <Content Include="libraries\tcc\include\tcc\tcc_libm.h" />
+    <Content Include="libraries\tcc\include\tchar.h" />
+    <Content Include="libraries\tcc\include\time.h" />
+    <Content Include="libraries\tcc\include\vadefs.h" />
+    <Content Include="libraries\tcc\include\values.h" />
+    <Content Include="libraries\tcc\include\varargs.h" />
+    <Content Include="libraries\tcc\include\wchar.h" />
+    <Content Include="libraries\tcc\include\wctype.h" />
+    <Content Include="libraries\tcc\include\winapi\basetsd.h" />
+    <Content Include="libraries\tcc\include\winapi\basetyps.h" />
+    <Content Include="libraries\tcc\include\winapi\guiddef.h" />
+    <Content Include="libraries\tcc\include\winapi\poppack.h" />
+    <Content Include="libraries\tcc\include\winapi\pshpack1.h" />
+    <Content Include="libraries\tcc\include\winapi\pshpack2.h" />
+    <Content Include="libraries\tcc\include\winapi\pshpack4.h" />
+    <Content Include="libraries\tcc\include\winapi\pshpack8.h" />
+    <Content Include="libraries\tcc\include\winapi\winbase.h" />
+    <Content Include="libraries\tcc\include\winapi\wincon.h" />
+    <Content Include="libraries\tcc\include\winapi\windef.h" />
+    <Content Include="libraries\tcc\include\winapi\windows.h" />
+    <Content Include="libraries\tcc\include\winapi\winerror.h" />
+    <Content Include="libraries\tcc\include\winapi\wingdi.h" />
+    <Content Include="libraries\tcc\include\winapi\winnt.h" />
+    <Content Include="libraries\tcc\include\winapi\winreg.h" />
+    <Content Include="libraries\tcc\include\winapi\winuser.h" />
+    <Content Include="libraries\tcc\include\winapi\winver.h" />
+    <Content Include="libraries\tcc\include\_mingw.h" />
+    <Content Include="libraries\tcc\libtcc.dll" />
+    <Content Include="libraries\tcc\libtcc\libtcc.def" />
+    <Content Include="libraries\tcc\libtcc\libtcc.h" />
+    <Content Include="libraries\tcc\lib\gdi32.def" />
+    <Content Include="libraries\tcc\lib\kernel32.def" />
+    <Content Include="libraries\tcc\lib\msvcrt.def" />
+    <Content Include="libraries\tcc\lib\user32.def" />
+    <Content Include="libraries\tcc\tcc.exe" />
+    <Content Include="README.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="libraries\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="exercises\compulsory\files.lst">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="exercises\additional\files.lst">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
