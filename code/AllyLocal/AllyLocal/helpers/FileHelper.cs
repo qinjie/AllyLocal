@@ -9,7 +9,7 @@ namespace Ally_Local.helpers
 {
     class FileHelper
     {
-        public static int GenerateEmptyFilesFromList(string sourceFilePath, string toFolder)
+        public static int GenerateEmptyFilesFromList(string sourceFilePath, string toFolder, bool overwrite = false)
         {
             // Create file and directory if they don't exist
             string dir = System.IO.Path.GetDirectoryName(sourceFilePath);
@@ -31,6 +31,10 @@ namespace Ally_Local.helpers
                         string filePath = Path.Combine(toFolder, line.Trim());
                         if (!string.IsNullOrEmpty(filePath))
                         {
+                            if (File.Exists(filePath) && !overwrite)
+                            {
+                                continue;
+                            }
                             WriteFile(filePath, "");
                             counter++;
                         }
@@ -60,9 +64,11 @@ namespace Ally_Local.helpers
             return filePath;
         }
 
-
         public static string[] ListFiles(string folderPath, string filePattern = "*.c", bool includeSubfolder = false)
         {
+            if (!System.IO.Directory.Exists(folderPath))
+                System.IO.Directory.CreateDirectory(folderPath);
+
             if (includeSubfolder)
             {
                 return Directory.GetFiles(folderPath, filePattern, SearchOption.AllDirectories);
@@ -73,21 +79,21 @@ namespace Ally_Local.helpers
             }
         }
 
-        public static bool CopyFolderContent(string sourceFolderPath, string targetFolderPath)
+        public static bool CopyFolderContent(string sourceFolder, string targetFolderPath)
         {
-            var diSource = new DirectoryInfo(sourceFolderPath);
+            var diSource = new DirectoryInfo(sourceFolder);
             var diTarget = new DirectoryInfo(targetFolderPath);
-            if (!System.IO.Directory.Exists(sourceFolderPath))
+            if (!System.IO.Directory.Exists(sourceFolder))
                 return false;
 
             if (!System.IO.Directory.Exists(targetFolderPath))
-                System.IO.Directory.CreateDirectory(sourceFolderPath);
+                System.IO.Directory.CreateDirectory(sourceFolder);
 
             CopyAllContent(diSource, diTarget);
             return true;
         }
 
-        private static void CopyAllContent(DirectoryInfo source, DirectoryInfo target)
+        private static void CopyAllContent(DirectoryInfo source, DirectoryInfo target, bool overwrite = false)
         {
             Directory.CreateDirectory(target.FullName);
 
@@ -95,7 +101,10 @@ namespace Ally_Local.helpers
             foreach (FileInfo fi in source.GetFiles())
             {
                 Console.WriteLine(@"Copying {0}\{1}", target.FullName, fi.Name);
-                fi.CopyTo(Path.Combine(target.FullName, fi.Name), true);
+                string targetFile = Path.Combine(target.FullName, fi.Name);
+                if (overwrite == false && File.Exists(targetFile))
+                    continue;
+                fi.CopyTo(targetFile, overwrite);
             }
 
             // Copy each subdirectory using recursion.
@@ -103,7 +112,7 @@ namespace Ally_Local.helpers
             {
                 DirectoryInfo nextTargetSubDir =
                     target.CreateSubdirectory(diSourceSubDir.Name);
-                CopyAllContent(diSourceSubDir, nextTargetSubDir);
+                CopyAllContent(diSourceSubDir, nextTargetSubDir, overwrite);
             }
         }
 

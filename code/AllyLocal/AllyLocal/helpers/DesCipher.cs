@@ -48,7 +48,7 @@ namespace Ally_Local.helpers
         }
 
 
-        private static string GetSHA256String(string text)
+        public static string GetSHA256String(string text)
         {
             var UE = new UnicodeEncoding();
             var message = UE.GetBytes(text);

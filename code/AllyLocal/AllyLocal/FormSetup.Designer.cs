@@ -40,7 +40,7 @@
             this.btSetName.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btSetName.Enabled = false;
             this.btSetName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btSetName.Location = new System.Drawing.Point(203, 88);
+            this.btSetName.Location = new System.Drawing.Point(193, 89);
             this.btSetName.Name = "btSetName";
             this.btSetName.Size = new System.Drawing.Size(92, 29);
             this.btSetName.TabIndex = 0;
@@ -72,7 +72,7 @@
             // 
             this.btClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btClose.Location = new System.Drawing.Point(75, 88);
+            this.btClose.Location = new System.Drawing.Point(65, 89);
             this.btClose.Name = "btClose";
             this.btClose.Size = new System.Drawing.Size(92, 29);
             this.btClose.TabIndex = 9;
@@ -97,7 +97,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btClose;
-            this.ClientSize = new System.Drawing.Size(356, 135);
+            this.ClientSize = new System.Drawing.Size(356, 137);
             this.Controls.Add(this.lblNote);
             this.Controls.Add(this.btClose);
             this.Controls.Add(this.label1);

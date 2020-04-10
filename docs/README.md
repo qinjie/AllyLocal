@@ -19,13 +19,17 @@ There are 2 types of exercises, **compulsory exercises** and **additional exerci
 * **Compulsory Exercises:** List of compulsory exercises which students must complete. 
 * **Additional Exercises:** List of additional exercises which teachers may ask students to practice.
 
-Upon running the program the first time, a **"exercises"** folder will be created in **"c:\Users\<USERNAME>\AppData\Roaming\AllyLocal\"** folder. It typically contains 2 subfolders, **"additional"** and **"compulsory"**. 
+Upon running the program the first time, a **"exercises"** folder will be created in **"c:\Users\<USERNAME>\AppData\Roaming\AllyLocal\<StudentHash>"** folder. It typically contains 2 subfolders, **"additional"** and **"compulsory"**. 
 
 Module leader can use the file **"exercises/compulsory/files.lst"** to specify list of compulsory exercises which students must complete. Based on the **"files.lst"** file, empty files will be created. 
 
 ### 1.2 Encryption
 
-Upon first launch, student will be asked for his name. All exercise files will be encrypted using lower case of student's name. 
+Upon first launch, student will be asked for his name. All exercise files will be encrypted by hash value of the name. 
+
+### 1.3 Change Name
+When student changes name, exercise files of previous name will still be in **"c:\Users\<USERNAME>\AppData\Roaming\AllyLocal\<StudentHash>"** folder.
+
 
 
 
@@ -60,7 +64,7 @@ When user select another file, modification to previous file will be automatical
 
 Shortcut keys are added for convenience.
 
-*  `CTRL+C`: Compile current file
+*  `CTRL+X`: Compile current file
 * `CTRL+R`: Run current file
 * `CTRL+N`: Create a new file
 * `CTRL+L`: Load an existing file

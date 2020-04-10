@@ -13,7 +13,7 @@ namespace Ally_Local.helpers
         public static string Key_ModuleCatalog = "module_catalog";
         public static string Key_ModuleName = "module_name";
         public static string Key_StudentName = "student_name";
-        public static string Key_DisableProfileRename = "disable_profile_rename";
+        public static string Key_StudentHash = "student_hash";
 
         public static string GetSetting(string key)
         {
@@ -23,6 +23,14 @@ namespace Ally_Local.helpers
         public static string SetSetting(string key, string value)
         {
             return ConfigSettings.SetSetting(key, value);
+        }
+
+        public static string GetHashFromName(string name)
+        {
+            string hash = "";
+            // hash = DesCipher.GetSHA256String(name.ToLower());
+            hash = FileHelper.SanitizeFileName(name.ToLower());
+            return hash;
         }
     }
 }

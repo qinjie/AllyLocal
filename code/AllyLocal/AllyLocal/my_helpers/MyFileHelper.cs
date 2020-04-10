@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms.VisualStyles;
 using Ally_Local.helpers;
 
 namespace Ally_Local.my_helpers
@@ -15,83 +16,44 @@ namespace Ally_Local.my_helpers
         public const string FOLDER_ADDITIONAL = FOLDER_EXERCISES + "/additional";
         public const string FILE_LST_NAME = "files.lst";
 
-        public static string GetExercisesFolder()
+
+        public static string GetSubfolderPath(string subfolder)
         {
             string appName = MyConfig.GetSetting(MyConfig.Key_AppName);
-            string folder = Path.Combine(
+            string userhash = MyConfig.GetSetting(MyConfig.Key_StudentHash);
+
+            string folderpath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 appName,
-                FOLDER_EXERCISES);
-            return folder;
-        }
-
-        public static string GetCompulsoryExerciseFolder()
-        {
-            string appName = MyConfig.GetSetting(MyConfig.Key_AppName);
-            string folder = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                appName,
-                FOLDER_COMPULSORY);
-            return folder;
-        }
-
-        public static string GetAdditionalExerciseFolder()
-        {
-            string appName = MyConfig.GetSetting(MyConfig.Key_AppName);
-            string folder = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                appName,
-                FOLDER_ADDITIONAL);
-            return folder;
-        }
-
-        public static string GetPathToFolder(string subfolder)
-        {
-            string appName = MyConfig.GetSetting(MyConfig.Key_AppName);
-            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                appName,
+                userhash,
                 subfolder);
-            return path;
+
+            return folderpath;
         }
 
         public static void GenerateEmptyFilesFromList()
         {
-            string toFolder = GetCompulsoryExerciseFolder();
+            string toFolder = GetSubfolderPath(FOLDER_COMPULSORY);
             string filePath = Path.Combine(toFolder, FILE_LST_NAME);
             FileHelper.GenerateEmptyFilesFromList(filePath, toFolder);
 
-            toFolder = GetAdditionalExerciseFolder();
+            // toFolder = GetAdditionalExerciseFolder(userhash);
+            toFolder = GetSubfolderPath(FOLDER_ADDITIONAL);
             filePath = Path.Combine(toFolder, FILE_LST_NAME);
             FileHelper.GenerateEmptyFilesFromList(filePath, toFolder);
         }
 
-
-        public static string[] ListFiles(string folderPath, string filePattern = "*.c", bool includeSubfolder = false)
-        {
-            if (!System.IO.Directory.Exists(folderPath))
-                System.IO.Directory.CreateDirectory(folderPath);
-
-            if (includeSubfolder)
-            {
-                return Directory.GetFiles(folderPath, filePattern, SearchOption.AllDirectories);
-            }
-            else
-            {
-                return Directory.GetFiles(folderPath, filePattern);
-            }
-        }
-
         public static void CopyExerciseFolders()
         {
-            string sourceFolderPath = FOLDER_EXERCISES;
-            string destFolderPath = GetExercisesFolder();
+            string sourceFolder = FOLDER_EXERCISES;
+            string destFolderPath = GetSubfolderPath(FOLDER_EXERCISES);
 
-            FileHelper.CopyFolderContent(sourceFolderPath, destFolderPath);
+            FileHelper.CopyFolderContent(sourceFolder, destFolderPath);
         }
 
         public static void DeleteExerciseFolder()
         {
-            string folder = MyFileHelper.GetExercisesFolder();
+            string folder = GetSubfolderPath(FOLDER_EXERCISES);
             if (Directory.Exists(folder))
             {
                 try

@@ -70,8 +70,7 @@ namespace Ally_Local
 
         public void LoadFileLists()
         {
-            string[] list = MyFileHelper.ListFiles(MyFileHelper.GetCompulsoryExerciseFolder());
-
+            string[] list = FileHelper.ListFiles(MyFileHelper.GetSubfolderPath(MyFileHelper.FOLDER_COMPULSORY));
             lvCompulsory.View = View.Details;
             lvCompulsory.Columns.Add("FileName", -2);
             lvCompulsory.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
@@ -79,14 +78,12 @@ namespace Ally_Local
             foreach (string file in list)
             {
                 string name = Path.GetFileName(file);
-//                ListViewItem item = lvCompulsory.Items.Add(name);
                 ListViewItem item = lvCompulsory.Items.Add(new ListViewItem(new string[] {name}));
 
                 item.Tag = file;
             }
 
-            list = MyFileHelper.ListFiles(MyFileHelper.GetAdditionalExerciseFolder());
-
+            list = FileHelper.ListFiles(MyFileHelper.GetSubfolderPath(MyFileHelper.FOLDER_ADDITIONAL));
             lvAdditional.View = View.Details;
             lvAdditional.Columns.Add("FileName", -2);
             lvAdditional.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
@@ -94,7 +91,6 @@ namespace Ally_Local
             foreach (string file in list)
             {
                 string name = Path.GetFileName(file);
-//                ListViewItem item = lvAdditional.Items.Add(name);
                 ListViewItem item = lvAdditional.Items.Add(new ListViewItem(new string[] {name}));
                 item.Tag = file;
             }
@@ -102,14 +98,15 @@ namespace Ally_Local
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            while (string.IsNullOrEmpty(MyConfig.GetSetting(MyConfig.Key_StudentName).Trim()))
-            {
-                FormSetup f = new FormSetup();
-                f.ShowDialog();
-            }
-
             SetToolTip();
             btRefresh.PerformClick();
+
+            if (string.IsNullOrEmpty(MyConfig.GetSetting(MyConfig.Key_StudentName).Trim()))
+            {
+                MessageBox.Show("Name must be set to use the program", "Empty Name", MessageBoxButtons.OK,
+                    MessageBoxIcon.Asterisk);
+                System.Windows.Forms.Application.Exit();
+            }
         }
 
         private System.Windows.Forms.ToolTip toolTip1;
@@ -122,7 +119,7 @@ namespace Ally_Local
             toolTip1.ReshowDelay = 500;
             toolTip1.ShowAlways = true;
             toolTip1.ShowAlways = true;
-            toolTip1.SetToolTip(this.btCompile, "Compile Code (CTRL+C)");
+            toolTip1.SetToolTip(this.btCompile, "Compile Code (CTRL+X)");
             toolTip1.SetToolTip(this.btRun, "Run Code (CTRL+R)");
             toolTip1.SetToolTip(this.btSave, "Save Code (CTRL+S)");
             toolTip1.SetToolTip(this.btNewFile, "Create New File (CTRL+N)");
@@ -132,7 +129,7 @@ namespace Ally_Local
         }
 
         // Shortcut keys for buttons
-        private const Keys CompileFileKeys = Keys.Control | Keys.C;
+        private const Keys CompileFileKeys = Keys.Control | Keys.X;
         private const Keys NewFileKeys = Keys.Control | Keys.N;
         private const Keys RunFileKeys = Keys.Control | Keys.R;
         private const Keys LoadFileKeys = Keys.Control | Keys.L;
@@ -175,10 +172,10 @@ namespace Ally_Local
                 btSave.PerformClick();
                 return true;
             }
-            // else if (keyData == PasteKeys)
-            // {
-            //     return true;
-            // }
+            else if (keyData == PasteKeys)
+            {
+                return true;
+            }
             else
             {
                 return base.ProcessCmdKey(ref msg, keyData);
@@ -237,7 +234,7 @@ namespace Ally_Local
             //     splitContainer2.SplitterDistance = (int) (splitContainer2.Height * 4.0 / 5.0);
             // }
 
-            splitContainer2.SplitterDistance = (int)(splitContainer2.Height * 4.0 / 5.0);
+            splitContainer2.SplitterDistance = (int) (splitContainer2.Height * 4.0 / 5.0);
             TccHelper.RunByTcc(code);
             btRun.Enabled = true;
         }
@@ -249,7 +246,7 @@ namespace Ally_Local
                 // save all the data for item at index PrevoiusSelectedIndex 
                 string content = tbCode.Text;
                 FileHelper.WriteFile(this.currentFilePath, content, true,
-                    MyConfig.GetSetting(MyConfig.Key_StudentName));
+                    MyConfig.GetSetting(MyConfig.Key_StudentHash));
             }
 
             if (this.lvCompulsory.SelectedItems.Count > 0)
@@ -266,7 +263,7 @@ namespace Ally_Local
                 // save all the data for item at index PrevoiusSelectedIndex 
                 string content = tbCode.Text;
                 FileHelper.WriteFile(this.currentFilePath, content, true,
-                    MyConfig.GetSetting(MyConfig.Key_StudentName));
+                    MyConfig.GetSetting(MyConfig.Key_StudentHash));
             }
 
             if (this.lvAdditional.SelectedItems.Count > 0)
@@ -305,7 +302,7 @@ namespace Ally_Local
             if (!string.IsNullOrEmpty(filePath))
             {
                 string content = tbCode.Text;
-                FileHelper.WriteFile(filePath, content, true, MyConfig.GetSetting(MyConfig.Key_StudentName));
+                FileHelper.WriteFile(filePath, content, true, MyConfig.GetSetting(MyConfig.Key_StudentHash));
             }
             else
             {
@@ -316,17 +313,21 @@ namespace Ally_Local
         private void tbCode_Leave(object sender, EventArgs e)
         {
             string content = tbCode.Text;
-            FileHelper.WriteFile(this.currentFilePath, content, true, MyConfig.GetSetting(MyConfig.Key_StudentName));
+            FileHelper.WriteFile(this.currentFilePath, content, true, MyConfig.GetSetting(MyConfig.Key_StudentHash));
         }
 
         private void btNewFile_Click(object sender, EventArgs e)
         {
             string filename = Interaction.InputBox("Enter file name", "Create New File", "myfile.c", -1, -1);
+            if (!filename.EndsWith(".c"))
+            {
+                filename = filename + ".c";
+            }
             filename = FileHelper.SanitizeFileName(filename);
             if (!string.IsNullOrEmpty(filename))
             {
                 // Create new file and add to additional_list
-                string toFolder = MyFileHelper.GetAdditionalExerciseFolder();
+                string toFolder = MyFileHelper.GetSubfolderPath(MyFileHelper.FOLDER_ADDITIONAL);
                 string filePath = Path.Combine(toFolder, filename);
                 if (File.Exists(filePath))
                 {
@@ -341,6 +342,7 @@ namespace Ally_Local
                     tabFileLists.SelectTab(1);
                     ListViewItem item = lvAdditional.Items.Add(new ListViewItem(new string[] {filename}));
                     item.Tag = filePath;
+                    lvAdditional.SelectedItems.Clear();
                     lvAdditional.Items[item.Index].Focused = true;
                     lvAdditional.Items[item.Index].Selected = true;
                 }
@@ -371,7 +373,7 @@ namespace Ally_Local
         {
             // Copy the file into "additional" folder
             string fileName = Path.GetFileName(inputFile);
-            string destFile = Path.Combine(MyFileHelper.GetAdditionalExerciseFolder(), fileName);
+            string destFile = Path.Combine(MyFileHelper.GetSubfolderPath(MyFileHelper.FOLDER_ADDITIONAL), fileName);
 
             bool exists = File.Exists(destFile);
             if (exists)
@@ -385,7 +387,7 @@ namespace Ally_Local
             }
 
             string content = FileHelper.ReadFile(inputFile);
-            FileHelper.WriteFile(destFile, content, true, MyConfig.GetSetting(MyConfig.Key_StudentName));
+            FileHelper.WriteFile(destFile, content, true, MyConfig.GetSetting(MyConfig.Key_StudentHash));
 
             tabFileLists.SelectTab(1);
             ListViewItem item = null;
@@ -410,12 +412,22 @@ namespace Ally_Local
 
         private void btRefresh_Click(object sender, EventArgs e)
         {
-            string strName = ConfigSettings.GetSetting(MyConfig.Key_StudentName).Trim();
-            if (string.IsNullOrEmpty(strName))
+            string name = MyConfig.GetSetting(MyConfig.Key_StudentName);
+            if (string.IsNullOrEmpty(name))
             {
                 FormSetup f = new FormSetup();
                 f.ShowDialog();
             }
+
+            string hash = MyConfig.GetSetting(MyConfig.Key_StudentHash);
+            if (hash != MyConfig.GetHashFromName(name))
+            {
+                hash = MyConfig.GetHashFromName(name);
+                MyConfig.SetSetting(MyConfig.Key_StudentHash, hash);
+            }
+
+            MyFileHelper.CopyExerciseFolders();
+            MyFileHelper.GenerateEmptyFilesFromList();
 
             SetTitle();
             LoadFileLists();
@@ -466,7 +478,7 @@ namespace Ally_Local
 
                 // Read from file
                 string content = FileHelper.ReadFile(this.currentFilePath, true,
-                    MyConfig.GetSetting(MyConfig.Key_StudentName));
+                    MyConfig.GetSetting(MyConfig.Key_StudentHash));
                 tbCode.Text = content;
 
                 lblFileName.Text = Path.GetFileName(this.currentFilePath);

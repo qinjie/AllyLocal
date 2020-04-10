@@ -41,24 +41,24 @@ namespace Ally_Local
                     return;
             }
 
-            // Save name to configSetting
+            // Save name and hash to configSetting
             MyConfig.SetSetting(MyConfig.Key_StudentName, strNewName);
+            MyConfig.SetSetting(MyConfig.Key_StudentHash, MyConfig.GetHashFromName(strNewName.ToLower()));
 
-            // Reset all exercises
-            MyFileHelper.DeleteExerciseFolder();
+            // Copy all exercises
             MyFileHelper.CopyExerciseFolders();
             MyFileHelper.GenerateEmptyFilesFromList();
 
             btSetName.Enabled = false;
-            // So that form will stay
-//            this.DialogResult = DialogResult.None;
+
+            Application.Restart();
         }
 
         private void btExit_Click(object sender, EventArgs e)
         {
             strName = MyConfig.GetSetting(MyConfig.Key_StudentName).Trim();
             string strNewName = tbName.Text.Trim();
-            if (strName != strNewName && MyConfig.GetSetting(MyConfig.Key_DisableProfileRename) != "true")
+            if (strName != strNewName)
             {
                 DialogResult dialogResult =
                     MessageBox.Show("Discard change in name?", "Warning", MessageBoxButtons.YesNo,
@@ -80,12 +80,6 @@ namespace Ally_Local
 
             if (strNewName == strName || string.IsNullOrWhiteSpace(strNewName))
                 btSetName.Enabled = false;
-            else if (MyConfig.GetSetting(MyConfig.Key_DisableProfileRename) == "true" &&
-                     !string.IsNullOrEmpty(strName))
-            {
-                lblNote.Text = "Chaning name are NOT allowed";
-                btSetName.Enabled = false;
-            }
             else
                 btSetName.Enabled = true;
         }
