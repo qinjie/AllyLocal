@@ -88,5 +88,20 @@ namespace Ally_Local.my_helpers
 
             FileHelper.CopyFolderContent(sourceFolderPath, destFolderPath);
         }
+
+        public static void DeleteExerciseFolder()
+        {
+            string folder = MyFileHelper.GetExercisesFolder();
+            if (Directory.Exists(folder))
+            {
+                try
+                {
+                    Directory.Delete(folder, true);
+                }
+                catch
+                {
+                }
+            }
+        }
     }
 }

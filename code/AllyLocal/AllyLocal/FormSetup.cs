@@ -45,6 +45,7 @@ namespace Ally_Local
             MyConfig.SetSetting(MyConfig.Key_StudentName, strNewName);
 
             // Reset all exercises
+            MyFileHelper.DeleteExerciseFolder();
             MyFileHelper.CopyExerciseFolders();
             MyFileHelper.GenerateEmptyFilesFromList();
 
