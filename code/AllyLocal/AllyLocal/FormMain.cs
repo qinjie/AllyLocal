@@ -107,6 +107,10 @@ namespace Ally_Local
                     MessageBoxIcon.Asterisk);
                 System.Windows.Forms.Application.Exit();
             }
+            this.Location = new Point(0, 0);
+            int h = Screen.PrimaryScreen.WorkingArea.Height;
+            int w = Screen.PrimaryScreen.WorkingArea.Width;
+            this.Size = new Size(w/2, h);
         }
 
         private System.Windows.Forms.ToolTip toolTip1;
@@ -174,7 +178,17 @@ namespace Ally_Local
             }
             else if (keyData == PasteKeys)
             {
-                return true;
+                // Allow lecturer to paste
+                string name = MyConfig.GetSetting(MyConfig.Key_StudentName);
+                string super_user_prefix = MyConfig.GetSetting(MyConfig.Key_SuperUserPrefix);
+                if (name.ToLower().StartsWith(super_user_prefix))
+                {
+                    return base.ProcessCmdKey(ref msg, keyData);
+                }
+                else
+                {
+                    return true;
+                }
             }
             else
             {
@@ -319,6 +333,10 @@ namespace Ally_Local
         private void btNewFile_Click(object sender, EventArgs e)
         {
             string filename = Interaction.InputBox("Enter file name", "Create New File", "myfile.c", -1, -1);
+            if (string.IsNullOrEmpty(filename.Trim()))
+            {
+                return;
+            }
             if (!filename.EndsWith(".c"))
             {
                 filename = filename + ".c";
