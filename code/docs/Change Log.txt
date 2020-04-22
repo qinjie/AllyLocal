@@ -1,0 +1,14 @@
+v1
+1. Allow user to switch profile name. But exercise files still stay with respective profile.
+
+v2
+1. If name starts with "lecture", the CTRL+V will be enabled. This setting can be changed in "AllyLocal.exe.config" file.
+2. Set program_textbox.HighlightingRangeType = HighlightingRangeType.VisibleRange;
+3. Program now starts by occupying left half screen. 
+
+v3
+1. Added export and import function
+	- User needs to set an username to enable import/export
+	- Export will save current user exercises to a zip file
+	- Import allow user to import a zip file. Note it will overwrite existing exercise files. 
+2. Change application icon to make it stand out

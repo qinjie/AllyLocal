@@ -85,3 +85,18 @@ Tool tips are added to main buttons to provide hint to user.
 All exercise files are saved locally encrypted by lower case of student's name. 
 
 If a student changes his name, all exercise files will be wipe clean.
+
+
+
+
+
+## Possible Problems
+
+1. Program failed to start. No window form shows.
+   * Run solution in Visual Studio reveal following error "Couldn't process file resx due to its being in the Internet or Restricted zone or having the mark of the web on the file".
+   * This is because antivirus program in the computer blocked some of the files.
+   * Solution:
+     * Start PowerShell
+     * CD into the AllyLocal folder
+     * Run command `Get-ChildItem -Path . -Recurse | Unblock-File`
+     * Try to run AllyLocal again

@@ -17,7 +17,7 @@ namespace Ally_Local.my_helpers
         public const string FILE_LST_NAME = "files.lst";
 
 
-        public static string GetSubfolderPath(string subfolder)
+        public static string GetUserfolderPath()
         {
             string appName = MyConfig.GetSetting(MyConfig.Key_AppName);
             string userhash = MyConfig.GetSetting(MyConfig.Key_StudentHash);
@@ -25,8 +25,25 @@ namespace Ally_Local.my_helpers
             string folderpath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 appName,
-                userhash,
-                subfolder);
+                userhash);
+
+            return folderpath;
+        }
+
+        public static string GetSubfolderPath(string subfolder = "")
+        {
+            string appName = MyConfig.GetSetting(MyConfig.Key_AppName);
+            string userhash = MyConfig.GetSetting(MyConfig.Key_StudentHash);
+
+            string folderpath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                appName,
+                userhash);
+
+            if (!string.IsNullOrEmpty(subfolder))
+                folderpath = Path.Combine(
+                    folderpath,
+                    subfolder);
 
             return folderpath;
         }

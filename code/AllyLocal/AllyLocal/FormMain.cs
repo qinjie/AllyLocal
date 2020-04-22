@@ -101,12 +101,6 @@ namespace Ally_Local
             SetToolTip();
             btRefresh.PerformClick();
 
-            if (string.IsNullOrEmpty(MyConfig.GetSetting(MyConfig.Key_StudentName).Trim()))
-            {
-                MessageBox.Show("Name must be set to use the program", "Empty Name", MessageBoxButtons.OK,
-                    MessageBoxIcon.Asterisk);
-                System.Windows.Forms.Application.Exit();
-            }
             this.Location = new Point(0, 0);
             int h = Screen.PrimaryScreen.WorkingArea.Height;
             int w = Screen.PrimaryScreen.WorkingArea.Width;
@@ -435,6 +429,13 @@ namespace Ally_Local
             {
                 FormSetup f = new FormSetup();
                 f.ShowDialog();
+            }
+
+            if (string.IsNullOrEmpty(MyConfig.GetSetting(MyConfig.Key_StudentName).Trim()))
+            {
+                MessageBox.Show("Name must be set to use the program", "Empty Name", MessageBoxButtons.OK,
+                    MessageBoxIcon.Asterisk);
+                Environment.Exit(0);
             }
 
             string hash = MyConfig.GetSetting(MyConfig.Key_StudentHash);
