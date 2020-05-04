@@ -14,7 +14,7 @@ namespace Ally_Local.helpers
         public static string Key_ModuleName = "module_name";
         public static string Key_StudentName = "student_name";
         public static string Key_StudentHash = "student_hash";
-        public static string Key_SuperUserPrefix = "super_user_prefix";
+        public static string Key_SuperUserContains = "super_user_contains";
 
         public static string GetSetting(string key)
         {

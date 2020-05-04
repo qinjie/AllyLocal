@@ -42,10 +42,9 @@
             this.btSetName.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btSetName.Enabled = false;
             this.btSetName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btSetName.Location = new System.Drawing.Point(310, 126);
-            this.btSetName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btSetName.Location = new System.Drawing.Point(207, 82);
             this.btSetName.Name = "btSetName";
-            this.btSetName.Size = new System.Drawing.Size(154, 45);
+            this.btSetName.Size = new System.Drawing.Size(103, 29);
             this.btSetName.TabIndex = 0;
             this.btSetName.Text = "Set Name";
             this.btSetName.UseVisualStyleBackColor = true;
@@ -54,10 +53,9 @@
             // tbName
             // 
             this.tbName.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbName.Location = new System.Drawing.Point(24, 62);
-            this.tbName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tbName.Location = new System.Drawing.Point(16, 40);
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(501, 41);
+            this.tbName.Size = new System.Drawing.Size(335, 30);
             this.tbName.TabIndex = 1;
             this.tbName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbName.TextChanged += new System.EventHandler(this.TbName_TextChanged);
@@ -66,10 +64,9 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(18, 14);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(156, 25);
+            this.label1.Size = new System.Drawing.Size(115, 17);
             this.label1.TabIndex = 2;
             this.label1.Text = "Student Name:";
             // 
@@ -77,10 +74,9 @@
             // 
             this.btClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btClose.Location = new System.Drawing.Point(102, 126);
-            this.btClose.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btClose.Location = new System.Drawing.Point(68, 82);
             this.btClose.Name = "btClose";
-            this.btClose.Size = new System.Drawing.Size(154, 45);
+            this.btClose.Size = new System.Drawing.Size(103, 29);
             this.btClose.TabIndex = 9;
             this.btClose.Text = "Close";
             this.btClose.UseVisualStyleBackColor = true;
@@ -90,20 +86,20 @@
             // 
             this.lblNote.AutoSize = true;
             this.lblNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNote.Location = new System.Drawing.Point(198, 14);
+            this.lblNote.Location = new System.Drawing.Point(132, 9);
+            this.lblNote.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblNote.Name = "lblNote";
-            this.lblNote.Size = new System.Drawing.Size(166, 25);
+            this.lblNote.Size = new System.Drawing.Size(142, 17);
             this.lblNote.TabIndex = 10;
-            this.lblNote.Text = "(case-insensitive)";
+            this.lblNote.Text = "(NOT case-sensitive)";
             // 
             // btExport
             // 
             this.btExport.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btExport.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btExport.Location = new System.Drawing.Point(102, 197);
-            this.btExport.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btExport.Location = new System.Drawing.Point(68, 128);
             this.btExport.Name = "btExport";
-            this.btExport.Size = new System.Drawing.Size(154, 45);
+            this.btExport.Size = new System.Drawing.Size(103, 29);
             this.btExport.TabIndex = 11;
             this.btExport.Text = "Export Profile";
             this.btExport.UseVisualStyleBackColor = true;
@@ -113,10 +109,9 @@
             // 
             this.btImport.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btImport.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btImport.Location = new System.Drawing.Point(310, 197);
-            this.btImport.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btImport.Location = new System.Drawing.Point(207, 128);
             this.btImport.Name = "btImport";
-            this.btImport.Size = new System.Drawing.Size(154, 45);
+            this.btImport.Size = new System.Drawing.Size(103, 29);
             this.btImport.TabIndex = 12;
             this.btImport.Text = "Import Profile";
             this.btImport.UseVisualStyleBackColor = true;
@@ -125,10 +120,10 @@
             // FormSetup
             // 
             this.AcceptButton = this.btSetName;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btClose;
-            this.ClientSize = new System.Drawing.Size(555, 266);
+            this.ClientSize = new System.Drawing.Size(370, 173);
             this.Controls.Add(this.btImport);
             this.Controls.Add(this.btExport);
             this.Controls.Add(this.lblNote);
@@ -137,7 +132,6 @@
             this.Controls.Add(this.tbName);
             this.Controls.Add(this.btSetName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.Name = "FormSetup";
             this.Text = "Settings";

@@ -23,6 +23,8 @@ namespace Ally_Local
         // private int selectedIndex_Compulsory = -1;
         // private int selectedIndex_Additional = -1;
 
+        private const int TAB_INDEX_ADDITIONAL_EXERCISE = 1;
+
         public FormMain()
         {
             InitializeComponent();
@@ -104,26 +106,27 @@ namespace Ally_Local
             this.Location = new Point(0, 0);
             int h = Screen.PrimaryScreen.WorkingArea.Height;
             int w = Screen.PrimaryScreen.WorkingArea.Width;
-            this.Size = new Size(w/2, h);
+            this.Size = new Size(w / 2, h);
         }
 
-        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ToolTip _toolTip1;
 
         private void SetToolTip()
         {
-            toolTip1 = new System.Windows.Forms.ToolTip();
-            toolTip1.InitialDelay = 500;
-            toolTip1.AutoPopDelay = 5000;
-            toolTip1.ReshowDelay = 500;
-            toolTip1.ShowAlways = true;
-            toolTip1.ShowAlways = true;
-            toolTip1.SetToolTip(this.btCompile, "Compile Code (CTRL+X)");
-            toolTip1.SetToolTip(this.btRun, "Run Code (CTRL+R)");
-            toolTip1.SetToolTip(this.btSave, "Save Code (CTRL+S)");
-            toolTip1.SetToolTip(this.btNewFile, "Create New File (CTRL+N)");
-            toolTip1.SetToolTip(this.btLoadFile, "Load Existing File (CTRL+L, or Drag and drop files)");
-            toolTip1.SetToolTip(this.tbCode, "(Load files by Drag & Drop)");
-            toolTip1.SetToolTip(this.lvAdditional, "(Load files by Drag & Drop)");
+            _toolTip1 = new System.Windows.Forms.ToolTip();
+            _toolTip1.InitialDelay = 500;
+            _toolTip1.AutoPopDelay = 5000;
+            _toolTip1.ReshowDelay = 500;
+            _toolTip1.ShowAlways = true;
+            _toolTip1.ShowAlways = true;
+            _toolTip1.SetToolTip(this.btCompile, "Compile Code (CTRL+X)");
+            _toolTip1.SetToolTip(this.btRun, "Run Code (CTRL+R)");
+            _toolTip1.SetToolTip(this.btSave, "Save Code (CTRL+S)");
+            _toolTip1.SetToolTip(this.btNewFile, "Create New File (CTRL+N)");
+            _toolTip1.SetToolTip(this.btLoadFile, "Load Existing File (CTRL+L, or Drag and drop files)");
+            _toolTip1.SetToolTip(this.tbCode, "(Load files by Drag & Drop)");
+            _toolTip1.SetToolTip(this.lvAdditional, "(Load files by Drag & Drop)");
+            _toolTip1.SetToolTip(this.btExport, "Export File (CTRL+E)");
         }
 
         // Shortcut keys for buttons
@@ -132,6 +135,7 @@ namespace Ally_Local
         private const Keys RunFileKeys = Keys.Control | Keys.R;
         private const Keys LoadFileKeys = Keys.Control | Keys.L;
         private const Keys SaveFileKeys = Keys.Control | Keys.S;
+        private const Keys ExportFileKeys = Keys.Control | Keys.E;
 
         // Disable paste
         private const Keys PasteKeys = Keys.Control | Keys.V;
@@ -164,6 +168,11 @@ namespace Ally_Local
                 btLoadFile.PerformClick();
                 return true;
             }
+            else if (keyData == ExportFileKeys)
+            {
+                btExport.PerformClick();
+                return true;
+            }
             else if (keyData == SaveFileKeys)
             {
                 // New file
@@ -174,8 +183,8 @@ namespace Ally_Local
             {
                 // Allow lecturer to paste
                 string name = MyConfig.GetSetting(MyConfig.Key_StudentName);
-                string super_user_prefix = MyConfig.GetSetting(MyConfig.Key_SuperUserPrefix);
-                if (name.ToLower().StartsWith(super_user_prefix))
+                string super_user_contains = MyConfig.GetSetting(MyConfig.Key_SuperUserContains);
+                if (name.ToLower().Contains(super_user_contains))
                 {
                     return base.ProcessCmdKey(ref msg, keyData);
                 }
@@ -331,10 +340,12 @@ namespace Ally_Local
             {
                 return;
             }
+
             if (!filename.EndsWith(".c"))
             {
                 filename = filename + ".c";
             }
+
             filename = FileHelper.SanitizeFileName(filename);
             if (!string.IsNullOrEmpty(filename))
             {
@@ -494,6 +505,14 @@ namespace Ally_Local
             if (item != null)
             {
                 this.currentFilePath = (string) item.Tag;
+                if (tabFileLists.SelectedIndex == TAB_INDEX_ADDITIONAL_EXERCISE)
+                {
+                    btExport.Visible = true;
+                }
+                else
+                {
+                    btExport.Visible = false;
+                }
 
                 // Read from file
                 string content = FileHelper.ReadFile(this.currentFilePath, true,
@@ -587,6 +606,35 @@ namespace Ally_Local
                 e.Effect = DragDropEffects.Copy;
             else
                 e.Effect = DragDropEffects.None;
+        }
+
+        private void BtExport_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            dialog.DefaultExt = ".c"; // Default file extension
+            dialog.Filter = "C files (*.c)|*.c|All files (*.*)|*.*";
+
+            dialog.FileName = Path.GetFileName(this.currentFilePath);
+
+            DialogResult result = dialog.ShowDialog(this);
+            if (result != DialogResult.OK || string.IsNullOrEmpty(dialog.FileName))
+            {
+                return;
+            }
+
+            try
+            {
+                string filePath = dialog.FileName;
+                FileHelper.WriteFile(filePath, tbCode.Text);
+
+                MessageBox.Show("Exported to: " + dialog.FileName, "Export File", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Export File Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

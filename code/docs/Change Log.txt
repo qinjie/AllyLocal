@@ -12,3 +12,6 @@ v3
 	- Export will save current user exercises to a zip file
 	- Import allow user to import a zip file. Note it will overwrite existing exercise files. 
 2. Change application icon to make it stand out
+
+v3.1
+1. Added Export button to export files in Additional List.
